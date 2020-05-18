@@ -13,5 +13,14 @@ namespace SakerhetProjektGrupp4.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public ActionResult Index(string anvNamn, string losord)
+        {
+            var a = anvNamn; 
+            var b = losord;
+            return View();
+        }
+        
+
     }
 }

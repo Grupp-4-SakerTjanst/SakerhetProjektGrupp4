@@ -3,20 +3,20 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Inloggning</h2>
+<head>
+    <link href="~/Style/HomeStyle.css" rel="stylesheet" />
+</head>
+<body>
 
-Viewbag.Minna = "MInna";
-<p>Elvis is here</p>
+    @using (Html.BeginForm("Index", "Home"))
+    {
+<div>
 
-Viewbag.Emilia = "Emilia";
-Viewbag.Emelie= "Emelie";
-Viewbag.hanam= "Emelie";
-Viewbag.Emelie= "Emelie";
-Viewbag.Emelie= "Emelie";
-Viewbag.Emelie= "Emelie";
-Viewbag.Emelie= "Emelie";
-Viewbag.Emelie= "Emelie";
-Viewbag.Emelie= "Emelie";
+    <p>@Html.TextBox("anvNamn", null, new {placeholder = "Användarnamn", @class = "InlogForm" })</p>
+    <p>@Html.Password("losord", null, new { placeholder = "Lösenord", @class = "InlogForm" })</p>
+    <div><input type="submit" value="Logga in" class="loggknapp" /></div>
+</div>
+}
 
-Viewbag.Emelie= "Emelie";
-
+</body>
