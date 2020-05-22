@@ -13,33 +13,30 @@ namespace SakerhetProjektGrupp4.Controllers
 {
     public class PersonalController : Controller
     {
-        // GET: Personal
-        public ActionResult Index()
-        {
-            return View();
-        }
 
-        [Route("Personals/{Id}")]
-        [HttpPost]
+        // GET: Personal
+        
+        [HttpGet]
         public async Task<ActionResult> Index(string anvNamn, string Losenord)
         {
             string Baseurl = "http://localhost:56539/"; //Ganim
-            List<PersonalModel> AnvInfo = new List<PersonalModel>();
+            
+            List<Personal> PerInfo = new List<Personal>();
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Baseurl);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage Res = await client.GetAsync("Personals/1");
+                HttpResponseMessage Res = await client.GetAsync("Personal");
                 if (Res.IsSuccessStatusCode)
                 {
-                    var AnvSvar = Res.Content.ReadAsStringAsync().Result;
-                    AnvInfo = JsonConvert.DeserializeObject<List<PersonalModel>>(AnvSvar);
+                    var PerSvar = Res.Content.ReadAsStringAsync().Result;
+                    PerInfo = JsonConvert.DeserializeObject<List<Personal>>(PerSvar);
                 }
 
 
-                return View(AnvInfo);
+                return View(PerInfo);
             }
         }
     }

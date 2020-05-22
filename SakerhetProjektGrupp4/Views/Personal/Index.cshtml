@@ -1,0 +1,55 @@
+﻿@model IEnumerable<SakerhetProjektGrupp4.Models.Personal>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2> Personal </h2>
+
+    <div >
+
+        <table>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Förnamn
+                </th>
+                <th>
+                    Efternamn
+                </th>
+                <th>
+                    Roll
+                </th>
+                <th>
+                    Behörighetsnivå
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Namn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Efternamn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Roll)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BehorighetsNiva)
+                </td>
+
+
+            </tr>
+            }
+
+        </table>
+    </div>
