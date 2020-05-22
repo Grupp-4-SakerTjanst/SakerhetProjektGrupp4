@@ -27,7 +27,7 @@ namespace SakerhetProjektGrupp4.Controllers
         public async Task<ActionResult> Index(string anvNamn,string Losenord)
         {
             string Baseurl = "http://localhost:56539/"; //Ganim
-            List<AnvandarModel> AnvInfo = new List<AnvandarModel>();
+            List<AnvandarModel> LogInInfo = new List<AnvandarModel>();
 
             using (var client = new HttpClient())
             {
@@ -37,12 +37,12 @@ namespace SakerhetProjektGrupp4.Controllers
                 HttpResponseMessage Res = await client.GetAsync("Personal/1");
                 if (Res.IsSuccessStatusCode)
                 {
-                    var AnvSvar = Res.Content.ReadAsStringAsync().Result;
-                    AnvInfo = JsonConvert.DeserializeObject<List<AnvandarModel>>(AnvSvar);
+                    var LogInSvar = Res.Content.ReadAsStringAsync().Result;
+                    LogInInfo = JsonConvert.DeserializeObject<List<AnvandarModel>>(LogInSvar);
                 }
                 
                 
-                return View(AnvInfo);
+                return View(LogInInfo);
             }
         }
   
