@@ -11,43 +11,36 @@ using System.Threading.Tasks;
 
 namespace SakerhetProjektGrupp4.Controllers
 {
-
-    public class HomeController : Controller
+    public class PersonalController : Controller
     {
-        // GET: Home
+        // GET: Personal
         public ActionResult Index()
         {
             return View();
         }
 
-
-        //Metod för att hämta PersonalLista RAW-data
-        [Route("/{Id}")]
+        [Route("Personals/{Id}")]
         [HttpPost]
-        public async Task<ActionResult> Index(string anvNamn,string Losenord)
+        public async Task<ActionResult> Index(string anvNamn, string Losenord)
         {
             string Baseurl = "http://localhost:56539/"; //Ganim
-            List<AnvandarModel> AnvInfo = new List<AnvandarModel>();
+            List<PersonalModel> AnvInfo = new List<PersonalModel>();
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Baseurl);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage Res = await client.GetAsync("Personal/1");
+                HttpResponseMessage Res = await client.GetAsync("Personals/1");
                 if (Res.IsSuccessStatusCode)
                 {
                     var AnvSvar = Res.Content.ReadAsStringAsync().Result;
-                    AnvInfo = JsonConvert.DeserializeObject<List<AnvandarModel>>(AnvSvar);
+                    AnvInfo = JsonConvert.DeserializeObject<List<PersonalModel>>(AnvSvar);
                 }
-                
-                
+
+
                 return View(AnvInfo);
             }
         }
-  
-
-        
-
     }
 }
