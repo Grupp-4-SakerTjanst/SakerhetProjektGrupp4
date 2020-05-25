@@ -26,19 +26,19 @@ namespace SakerhetProjektGrupp4.Controllers
         [HttpPost]
         public async Task<ActionResult> Index(string anvNamn,string Losenord)
         {
-            string Baseurl = "http://localhost:56539/"; //Ganim
-            List<AnvandarModel> LogInInfo = new List<AnvandarModel>();
+            string Baseurl = "http://localhost:54501/"; //Minna
+            List<PersonalSaftey> LogInInfo = new List<PersonalSaftey>();
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Baseurl);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage Res = await client.GetAsync("Personal/1");
+                HttpResponseMessage Res = await client.GetAsync("Personal");
                 if (Res.IsSuccessStatusCode)
                 {
                     var LogInSvar = Res.Content.ReadAsStringAsync().Result;
-                    LogInInfo = JsonConvert.DeserializeObject<List<AnvandarModel>>(LogInSvar);
+                    LogInInfo = JsonConvert.DeserializeObject<List<PersonalSaftey>>(LogInSvar);
                 }
                 
                 
