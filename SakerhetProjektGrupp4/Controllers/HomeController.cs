@@ -22,11 +22,11 @@ namespace SakerhetProjektGrupp4.Controllers
 
 
         //Metod för att hämta PersonalLista RAW-data
-        [Route("/{Id}")]
+        
         [HttpPost]
-        public async Task<ActionResult> Index(string anvNamn,string Losenord)
+        public async Task<ActionResult> Index(string Email, string Losenord)
         {
-            string Baseurl = "http://localhost:56539/"; //Ganim
+            string Baseurl = "http://localhost:54501/"; //Ganim
             List<AnvandarModel> AnvInfo = new List<AnvandarModel>();
 
             using (var client = new HttpClient())
@@ -34,7 +34,7 @@ namespace SakerhetProjektGrupp4.Controllers
                 client.BaseAddress = new Uri(Baseurl);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage Res = await client.GetAsync("Personal/1");
+                HttpResponseMessage Res = await client.GetAsync("SkapaAnvandare");
                 if (Res.IsSuccessStatusCode)
                 {
                     var AnvSvar = Res.Content.ReadAsStringAsync().Result;

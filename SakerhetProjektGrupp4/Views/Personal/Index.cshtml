@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Inloggning</h2>
+<head>
+    <link href="~/Style/HomeStyle.css" rel="stylesheet" />
+</head>
+<body>
+
+    @using (Html.BeginForm("Index", "Personal"))
+    {
+        <div>
+
+            <p>@Html.TextBox("anvNamn", null, new { placeholder = "Användarnamn", @class = "InlogForm" })</p>
+            <p>@Html.Password("losen", null, new { placeholder = "Lösenord", @class = "InlogForm" })</p>
+            <div><input type="submit" value="Logga in" class="loggknapp" /></div>
+        </div>
+    }
+
+</body>

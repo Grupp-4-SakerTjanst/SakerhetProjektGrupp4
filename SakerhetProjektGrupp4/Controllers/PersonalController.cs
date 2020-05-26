@@ -8,6 +8,16 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Formatting;
+using Newtonsoft.Json;
+
 
 namespace SakerhetProjektGrupp4.Controllers
 {
@@ -16,31 +26,57 @@ namespace SakerhetProjektGrupp4.Controllers
         // GET: Personal
         public ActionResult Index()
         {
+           
             return View();
         }
 
-        [Route("Personals/{Id}")]
+
         [HttpPost]
-        public async Task<ActionResult> Index(string anvNamn, string Losenord)
+        public ActionResult Index(string anvNamn, string losen)
         {
-            string Baseurl = "http://localhost:56539/"; //Ganim
-            List<PersonalModel> AnvInfo = new List<PersonalModel>();
+            PersonalModel test = new PersonalModel();
+            List<PersonalModel> ResponseAnv = new List<PersonalModel>();
+
+            test.Anvandarnamn = anvNamn;
+            test.Losenord = losen;
+            var h = "";
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(Baseurl);
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage Res = await client.GetAsync("Personals/1");
-                if (Res.IsSuccessStatusCode)
+
+                client.BaseAddress = new Uri("http://localhost:54501/");
+                var response = client.PostAsJsonAsync("Login",test).Result;
+                
+                
+                if (response.IsSuccessStatusCode)
                 {
-                    var AnvSvar = Res.Content.ReadAsStringAsync().Result;
-                    AnvInfo = JsonConvert.DeserializeObject<List<PersonalModel>>(AnvSvar);
+                    var AnvSvar = response.Content.ReadAsStringAsync().Result;
+                    ResponseAnv = JsonConvert.DeserializeObject<List<PersonalModel>>(AnvSvar);  //THE FCKING SACRATE CODE. TOUCH, DIE.
+                    Console.Write("Success");
                 }
+                else
+                    Console.Write("Error");
 
-
-                return View(AnvInfo);
+               
             }
+            var b = h;
+
+            return View();
+        }
+
+        public ActionResult SkapaPersonal()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SkapaPersonal(PersonalModel Personal)
+        {
+            var a = Personal.Anvandarnamn;
+            var b = Personal.Losenord;
+
+            return View();
         }
     }
 }
