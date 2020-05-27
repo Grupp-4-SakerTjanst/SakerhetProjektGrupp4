@@ -1,0 +1,63 @@
+﻿@model SakerhetProjektGrupp4.Models.PersonalModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Vill du radera följande?</h3>
+<div>
+    <h4>Cloth</h4>
+    <hr />
+    @*@using (Html.BeginForm("TaBortPersonal", "Personal", FormMethod.Post))
+    {*@
+        <dl class="dl-horizontal">
+            <dt>
+                Användarnamn
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AnvandarNamn)
+            </dd>
+
+            <dt>
+               Namn
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Namn)
+            </dd>
+
+            <dt>
+                Efternamn
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Efternamn)
+            </dd>
+
+            <dt>
+                Roll
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Roll)
+            </dd>
+
+        </dl>
+    @*}*@
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Ta bort" class="btn btn-default" /> |
+        </div>
+        <br />
+        <div>
+            @Html.ActionLink("Tillbaka", "Index")
+        </div>
+    }
+</div>
