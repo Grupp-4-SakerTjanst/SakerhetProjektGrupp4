@@ -14,40 +14,67 @@ namespace SakerhetProjektGrupp4.Controllers
 
     public class HomeController : Controller
     {
-        // GET: Home
         public ActionResult Index()
         {
+
             return View();
         }
 
-
-        //Metod för att hämta PersonalLista RAW-data
-        
         [HttpPost]
-        public async Task<ActionResult> Index(string Email, string Losenord)
+        public ActionResult Index(string anvNamn, string losord)
         {
-            string Baseurl = "http://localhost:54501/"; //Ganim
-            List<AnvandarModel> AnvInfo = new List<AnvandarModel>();
+            PersonalModel PersInfo = new PersonalModel();
+
+            PersInfo.AnvandarNamn = anvNamn;
+            PersInfo.Losenord = losord;
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(Baseurl);
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage Res = await client.GetAsync("Login");
-                if (Res.IsSuccessStatusCode)
+
+                client.BaseAddress = new Uri("http://localhost:54501/");
+                var response = client.PostAsJsonAsync("Login", PersInfo).Result;
+
+
+                if (response.IsSuccessStatusCode)
                 {
-                    var AnvSvar = Res.Content.ReadAsStringAsync().Result;
-                    AnvInfo = JsonConvert.DeserializeObject<List<AnvandarModel>>(AnvSvar);
+                    var AnvSvar = response.Content.ReadAsStringAsync().Result;
+                    // ResponseAnv = JsonConvert.DeserializeObject<List<PersonalModel>>(AnvSvar);  //THE FCKING SACRATE CODE. TOUCH, DIE.
+                    Console.Write("Success");
                 }
-                
-                
-                return View(AnvInfo);
+                else
+                    Console.Write("Error");
             }
+
+            return View();
         }
-  
 
-        
+        //[HttpPost]
+        //public ActionResult Index(string anvNamn, string losord)
+        //{
+        //    AnvandarModel test = new AnvandarModel();
+        //    List<PersonalModel> ResponseAnv = new List<PersonalModel>();
+                
+        //    test.Email = anvNamn;
+        //    test.Losenord = losord;
 
+        //    using (var client = new HttpClient())
+        //    {
+
+        //        client.BaseAddress = new Uri("http://localhost:54501/");
+        //        var response = client.PostAsJsonAsync("LoggaIn", test).Result;
+
+
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var AnvSvar = response.Content.ReadAsStringAsync().Result;
+        //            // ResponseAnv = JsonConvert.DeserializeObject<List<PersonalModel>>(AnvSvar);  //THE FCKING SACRATE CODE. TOUCH, DIE.
+        //            Console.Write("Success");
+        //        }
+        //        else
+        //            Console.Write("Error");
+        //    }
+
+        //    return View();
+        //}
     }
 }
