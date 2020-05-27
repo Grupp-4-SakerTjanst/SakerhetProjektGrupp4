@@ -7,8 +7,10 @@ namespace SakerhetProjektGrupp4.Models
 {
     public class PersonalModel
     {
-        public string AnvandarNamn { get; set; }
         public int Id { get; set; }
+
+        public string AnvandarNamn { get; set; }
+
         public string Losenord { get; set; }
 
         public string Namn { get; set; }

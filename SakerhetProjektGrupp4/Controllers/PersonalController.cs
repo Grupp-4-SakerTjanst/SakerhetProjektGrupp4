@@ -23,46 +23,54 @@ namespace SakerhetProjektGrupp4.Controllers
 {
     public class PersonalController : Controller
     {
-        
+        private PersonalModel db = new PersonalModel();
 
-        // GET: Personal
-        public ActionResult Index()
+        string Baseurl = "http://193.10.202.74/personal/personal"; //Detta visar första sidan för admin att utföra CRUD
+        public async Task<ActionResult> Index()
         {
-           
-            return View();
-        }
 
-
-        [HttpPost]
-        public ActionResult Index(string anvNamn, string losen)
-        {
-            PersonalModel test = new PersonalModel();
-            List<PersonalModel> ResponseAnv = new List<PersonalModel>();
-
-            test.AnvandarNamn = anvNamn;
-            test.Losenord = losen;
-
-            using (var client = new HttpClient())
+            List<PersonalModel> PersonalInfo = new List<PersonalModel>();
+            try
             {
 
-                client.BaseAddress = new Uri("http://localhost:54501/");
-                var response = client.PostAsJsonAsync("Login",test).Result;
-                
-                
-                if (response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    var AnvSvar = response.Content.ReadAsStringAsync().Result;
-                   // ResponseAnv = JsonConvert.DeserializeObject<List<PersonalModel>>(AnvSvar);  //THE FCKING SACRATE CODE. TOUCH, DIE.
-                    Console.Write("Success");                 
+               
+                    client.BaseAddress = new Uri(Baseurl);
+
+                    client.DefaultRequestHeaders.Clear();
+                   
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                   
+                    HttpResponseMessage Res = await client.GetAsync("personal");
+                    
+                    if (Res.IsSuccessStatusCode)
+                    {
+              
+                        var PersonalResponse = Res.Content.ReadAsStringAsync().Result;
+
+                        PersonalInfo = JsonConvert.DeserializeObject<List<PersonalModel>>(PersonalResponse);
+
+                    }
                 }
-                else
-                    Console.Write("Error");    
             }
 
-            return View();
+            catch (Exception e)
+            {
+                Console.WriteLine("Något gick fel" + e.Message);
+                throw;
+            }
+            finally
+            {
+                //close connection
+            }
+            //returning the employee list to view  
+            return View(PersonalInfo);
         }
+    
 
-        public ActionResult SkapaPersonal()
+    public ActionResult SkapaPersonal()
         {
 
             return View();
@@ -98,5 +106,56 @@ namespace SakerhetProjektGrupp4.Controllers
 
             return View();
         }
+
+        // GET: Student
+        public ActionResult TaBortPersonal(int? id)
+        {
+            IList<PersonalModel> ResponseAnv = null;
+            PersonalModel person = new PersonalModel();
+           
+
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://193.10.202.74/personal/personal");
+                //HTTP GET
+                var responseTask = client.GetAsync("personal");
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<PersonalModel>>();
+                    readTask.Wait();
+
+                    ResponseAnv = readTask.Result;
+                }
+            }
+
+            return View(person);
+        }
+        [HttpPost]
+        public ActionResult TaBortPersonal(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://193.10.202.74/personal/personal/");
+
+                //HTTP DELETE
+                var deleteTask = client.DeleteAsync("personal/" + id.ToString());
+                deleteTask.Wait();
+
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
     }
+
 }
