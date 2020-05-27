@@ -34,7 +34,7 @@ namespace SakerhetProjektGrupp4.Controllers
                 client.BaseAddress = new Uri(Baseurl);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage Res = await client.GetAsync("SkapaAnvandare");
+                HttpResponseMessage Res = await client.GetAsync("Login");
                 if (Res.IsSuccessStatusCode)
                 {
                     var AnvSvar = Res.Content.ReadAsStringAsync().Result;

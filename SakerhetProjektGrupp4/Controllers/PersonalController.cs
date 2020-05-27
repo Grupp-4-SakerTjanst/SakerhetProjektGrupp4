@@ -23,6 +23,8 @@ namespace SakerhetProjektGrupp4.Controllers
 {
     public class PersonalController : Controller
     {
+        
+
         // GET: Personal
         public ActionResult Index()
         {
@@ -37,9 +39,8 @@ namespace SakerhetProjektGrupp4.Controllers
             PersonalModel test = new PersonalModel();
             List<PersonalModel> ResponseAnv = new List<PersonalModel>();
 
-            test.Anvandarnamn = anvNamn;
+            test.AnvandarNamn = anvNamn;
             test.Losenord = losen;
-            var h = "";
 
             using (var client = new HttpClient())
             {
@@ -51,15 +52,12 @@ namespace SakerhetProjektGrupp4.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var AnvSvar = response.Content.ReadAsStringAsync().Result;
-                    ResponseAnv = JsonConvert.DeserializeObject<List<PersonalModel>>(AnvSvar);  //THE FCKING SACRATE CODE. TOUCH, DIE.
-                    Console.Write("Success");
+                   // ResponseAnv = JsonConvert.DeserializeObject<List<PersonalModel>>(AnvSvar);  //THE FCKING SACRATE CODE. TOUCH, DIE.
+                    Console.Write("Success");                 
                 }
                 else
-                    Console.Write("Error");
-
-               
+                    Console.Write("Error");    
             }
-            var b = h;
 
             return View();
         }
@@ -73,8 +71,30 @@ namespace SakerhetProjektGrupp4.Controllers
         [HttpPost]
         public ActionResult SkapaPersonal(PersonalModel Personal)
         {
-            var a = Personal.Anvandarnamn;
-            var b = Personal.Losenord;
+            PersonalModel tempPers = new PersonalModel();
+            List<PersonalModel> ResponseAnv = new List<PersonalModel>();
+
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:54501/");
+                var response = client.PostAsJsonAsync("SkapaPersonal", Personal).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var AnvSvar = response.Content.ReadAsStringAsync().Result;
+                   
+                    ResponseAnv = JsonConvert.DeserializeObject<List<PersonalModel>>(AnvSvar);  //THE FCKING SACRATE CODE. TOUCH, DIE.
+                    Console.Write("Success");
+                    
+                }
+                else
+                    Console.Write("Error");
+            }
+
+            
+
+
 
             return View();
         }

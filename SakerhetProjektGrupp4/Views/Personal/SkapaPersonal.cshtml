@@ -15,12 +15,12 @@
         <div>
             @using (Html.BeginForm("SkapaPersonal", "Personal", FormMethod.Post))
             {
-                <p>@Html.TextBoxFor(x => x.Anvandarnamn)</p>
-                <p>@Html.TextBoxFor(x => x.Losenord)</p>
-                <p>@Html.TextBoxFor(x => x.Namn)</p>
-                <p>@Html.TextBoxFor(x => x.Efternamn)</p>
-                <p>@Html.TextBoxFor(x => x.BehorighetsNiva)</p> // TODO, Dropdown meny.
-                <p>@Html.TextBoxFor(x => x.Roll)</p> //Todo, Dropdown meny.
+                <p>@Html.TextBoxFor(x => x.AnvandarNamn) AnvNamn</p>
+                <p>@Html.TextBoxFor(x => x.Losenord) Losenord</p>
+                <p>@Html.TextBoxFor(x => x.Namn) Namn</p>
+                <p>@Html.TextBoxFor(x => x.Efternamn) Efternamn</p>
+                <p>@Html.TextBoxFor(x => x.BehorighetsNiva) BehorighetsNiva</p> // TODO, Dropdown meny.
+                <p>@Html.TextBoxFor(x => x.Roll) Roll</p> //Todo, Dropdown meny.
                 <input type="submit" value="Skicka" />
 
             }
