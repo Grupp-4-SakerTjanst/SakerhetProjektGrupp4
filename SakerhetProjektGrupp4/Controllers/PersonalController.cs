@@ -115,15 +115,14 @@ namespace SakerhetProjektGrupp4.Controllers
                     Console.Write("Error");
             }
 
-
             return View();
         }
 
         // GET: Student
         public ActionResult TaBortPersonal(int? id)
         {
-            
-            IList<PersonalModel> ResponseAnv = null;
+            //IList<PersonalModel> ResponseAnv = null;
+            IList<PersonalModel> ResponseAnv = new List<PersonalModel>();
             PersonalModel person = new PersonalModel();
            
             using (var client = new HttpClient())
@@ -142,8 +141,8 @@ namespace SakerhetProjektGrupp4.Controllers
                     ResponseAnv = readTask.Result;
                 }
             }
+            return View(ResponseAnv);
 
-            return View(person);
         }
         [HttpPost]
         public ActionResult TaBortPersonal(int id)
@@ -153,7 +152,7 @@ namespace SakerhetProjektGrupp4.Controllers
                 client.BaseAddress = new Uri("http://193.10.202.74/personal/personal/");
 
                 //HTTP DELETE
-                var deleteTask = client.DeleteAsync("personal/" + id.ToString());
+                var deleteTask = client.DeleteAsync("personal" + id.ToString());
                 deleteTask.Wait();
 
                 var result = deleteTask.Result;
@@ -165,6 +164,24 @@ namespace SakerhetProjektGrupp4.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPut]
+        public ActionResult UppdateraPersonal()
+        {
+            using (var client = new HttpClient())
+            {
+                PersonalModel person = new PersonalModel();
+                client.BaseAddress = new Uri("http://193.10.202.74/personal/personal/");
+                var response = client.PutAsJsonAsync("personal/", person).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.Write("Success");
+                }
+                else
+                    Console.Write("Error");
+            }
+            return View();
         }
 
     }
