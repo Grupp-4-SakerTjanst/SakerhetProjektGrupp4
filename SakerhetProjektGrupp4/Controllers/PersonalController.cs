@@ -23,6 +23,21 @@ namespace SakerhetProjektGrupp4.Controllers
 {
     public class PersonalController : Controller
     {
+        public ActionResult Check(string behorig)
+        {
+            int hej = int.Parse(behorig);
+
+            if (hej == 3)
+            {
+                return RedirectToAction("Index", "Personal");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
         private PersonalModel db = new PersonalModel();
 
         string Baseurl = "http://193.10.202.74/personal/personal"; //Detta visar första sidan för admin att utföra CRUD
