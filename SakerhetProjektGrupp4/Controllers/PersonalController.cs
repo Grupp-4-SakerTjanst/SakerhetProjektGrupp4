@@ -85,7 +85,7 @@ namespace SakerhetProjektGrupp4.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://193.10.202.74/personal/personal");
+                client.BaseAddress = new Uri("http://localhost:54501/");
                 var response = client.PostAsJsonAsync("SkapaPersonal", Personal).Result;
 
                 if (response.IsSuccessStatusCode)
