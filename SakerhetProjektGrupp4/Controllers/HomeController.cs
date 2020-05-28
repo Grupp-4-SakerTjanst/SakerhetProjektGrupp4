@@ -14,6 +14,7 @@ namespace SakerhetProjektGrupp4.Controllers
 
     public class HomeController : Controller
     {
+        
         public ActionResult Index()
         {
 
@@ -37,7 +38,18 @@ namespace SakerhetProjektGrupp4.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var AnvSvar = response.Content.ReadAsStringAsync().Result;
+
+                    var PersonalResponse = response.Content.ReadAsStringAsync().Result;
+                    PersInfo.BehorighetsNiva = JsonConvert.DeserializeObject<PersonalModel>(PersonalResponse).BehorighetsNiva;
+
+                    if (PersInfo.BehorighetsNiva == 3)
+                    {
+
+                        string behorig = PersInfo.BehorighetsNiva.ToString();
+                       return RedirectToAction("Check","Personal", behorig);
+                    }
+
+                    //   AuktoritetValidation(response);
                     // ResponseAnv = JsonConvert.DeserializeObject<List<PersonalModel>>(AnvSvar);  //THE FCKING SACRATE CODE. TOUCH, DIE.
                     Console.Write("Success");
                 }
@@ -47,6 +59,17 @@ namespace SakerhetProjektGrupp4.Controllers
 
             return View();
         }
+
+
+        private string AuktoritetValidation(PersonalModel anv)
+        {
+
+
+            return "hej";
+
+        }
+
+
 
         //[HttpPost]
         //public ActionResult Index(string anvNamn, string losord)
