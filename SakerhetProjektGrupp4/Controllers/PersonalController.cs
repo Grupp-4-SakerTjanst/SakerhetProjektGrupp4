@@ -85,7 +85,7 @@ namespace SakerhetProjektGrupp4.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:54501/");
+                client.BaseAddress = new Uri("http://193.10.202.74/personal/personal");
                 var response = client.PostAsJsonAsync("SkapaPersonal", Personal).Result;
 
                 if (response.IsSuccessStatusCode)
@@ -100,9 +100,6 @@ namespace SakerhetProjektGrupp4.Controllers
                     Console.Write("Error");
             }
 
-            
-
-
 
             return View();
         }
@@ -110,11 +107,10 @@ namespace SakerhetProjektGrupp4.Controllers
         // GET: Student
         public ActionResult TaBortPersonal(int? id)
         {
+            
             IList<PersonalModel> ResponseAnv = null;
             PersonalModel person = new PersonalModel();
            
-
-
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://193.10.202.74/personal/personal");
