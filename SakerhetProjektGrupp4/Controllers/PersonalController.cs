@@ -151,22 +151,52 @@ namespace SakerhetProjektGrupp4.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPut]
-        public ActionResult UppdateraPersonal()
+        
+        public ActionResult UppdateraPersonal(int? id)
+        {
+            PersonalModel PersonalÄndra = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://193.10.202.74/personal/");
+                //HTTP GET
+                var responseTask = client.GetAsync("personal?id=" + id.ToString());
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<PersonalModel>();
+                    readTask.Wait();
+
+                    PersonalÄndra = readTask.Result;
+                }
+            }
+
+            return View(PersonalÄndra);
+        }
+
+        [HttpPost]
+        public ActionResult UppdateraPersonal(PersonalModel personal)
         {
             using (var client = new HttpClient())
             {
-                PersonalModel person = new PersonalModel();
-                client.BaseAddress = new Uri("http://193.10.202.74/personal/personal/");
-                var response = client.PutAsJsonAsync("personal/", person).Result;
-                if (response.IsSuccessStatusCode)
+                //PersonalModel person = new PersonalModel();
+                client.BaseAddress = new Uri("http://193.10.202.74/personal/");
+
+                //HTTP POST
+                var putTask = client.PutAsJsonAsync<PersonalModel>("UppdateraPersonal", personal);
+                putTask.Wait();
+
+                var result = putTask.Result;
+                if (result.IsSuccessStatusCode)
                 {
-                    Console.Write("Success");
+                    return RedirectToAction("Index");
                 }
-                else
-                    Console.Write("Error");
             }
-            return View();
+            return View(personal);
+
+
         }
 
     }
