@@ -100,7 +100,7 @@ namespace SakerhetProjektGrupp4.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:54501/");
+                client.BaseAddress = new Uri("http://193.10.202.74/personal/");
                 var response = client.PostAsJsonAsync("SkapaPersonal", Personal).Result;
 
                 if (response.IsSuccessStatusCode)
@@ -114,7 +114,6 @@ namespace SakerhetProjektGrupp4.Controllers
                 else
                     Console.Write("Error");
             }
-
             return View();
         }
 
@@ -122,48 +121,27 @@ namespace SakerhetProjektGrupp4.Controllers
         public ActionResult TaBortPersonal(int? id)
         {
             //IList<PersonalModel> ResponseAnv = null;
-            IList<PersonalModel> ResponseAnv = new List<PersonalModel>();
-            PersonalModel person = new PersonalModel();
-           
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("http://193.10.202.74/personal/personal");
-                //HTTP GET
-                var responseTask = client.GetAsync("personal");
-                responseTask.Wait();
+            PersonalModel ResponseAnv = new PersonalModel();
+            //PersonalModel person = new PersonalModel();
 
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<PersonalModel>>();
-                    readTask.Wait();
-
-                    ResponseAnv = readTask.Result;
+            using (var client = new HttpClient())            {                client.BaseAddress = new Uri("http://193.10.202.74/personal/");                var response = client.GetAsync("personal/" + id).Result;                if (response.IsSuccessStatusCode)                {                    var PersonalResponse = response.Content.ReadAsStringAsync().Result;                    ResponseAnv = JsonConvert.DeserializeObject<PersonalModel>(PersonalResponse);
                 }
             }
+
             return View(ResponseAnv);
+
 
         }
         [HttpPost]
-        public ActionResult TaBortPersonal(int id)
+        public ActionResult TaBortPersonal(PersonalModel DelPer)
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("http://193.10.202.74/personal/personal/");
+            PersonalModel ResponseAnv = new PersonalModel();
+            //PersonalModel person = new PersonalModel();
 
-                //HTTP DELETE
-                var deleteTask = client.DeleteAsync("personal" + id.ToString());
-                deleteTask.Wait();
+            using (var client = new HttpClient())            {                client.BaseAddress = new Uri("http://193.10.202.74/personal/");                var response = client.DeleteAsync("personal/" + DelPer.Id).Result;                if (response.IsSuccessStatusCode)                {
+                    Console.Write("Success");                }                else                    Console.Write("Error");            }
+            return View();
 
-                var result = deleteTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-
-                    return RedirectToAction("Index");
-                }
-            }
-
-            return RedirectToAction("Index");
         }
 
         [HttpPut]
