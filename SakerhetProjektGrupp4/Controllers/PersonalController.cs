@@ -124,37 +124,80 @@ namespace SakerhetProjektGrupp4.Controllers
             PersonalModel ResponseAnv = new PersonalModel();
             //PersonalModel person = new PersonalModel();
 
-            using (var client = new HttpClient())            {                client.BaseAddress = new Uri("http://193.10.202.74/personal/");                var response = client.GetAsync("personal/" + id).Result;                if (response.IsSuccessStatusCode)                {                    var PersonalResponse = response.Content.ReadAsStringAsync().Result;                    ResponseAnv = JsonConvert.DeserializeObject<PersonalModel>(PersonalResponse);
+            using (var client = new HttpClient())
+            {
+
+                client.BaseAddress = new Uri("http://193.10.202.74/personal/");
+                var response = client.GetAsync("personal/" + id).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var PersonalResponse = response.Content.ReadAsStringAsync().Result;
+                    ResponseAnv = JsonConvert.DeserializeObject<PersonalModel>(PersonalResponse);
                 }
             }
 
             return View(ResponseAnv);
-
-
         }
+
         [HttpPost]
-        public ActionResult TaBortPersonal(PersonalModel DelPer)
+        public ActionResult TaBortPersonal(PersonalModel DelPer) //KLAR
         {
             PersonalModel ResponseAnv = new PersonalModel();
             //PersonalModel person = new PersonalModel();
 
-            using (var client = new HttpClient())            {                client.BaseAddress = new Uri("http://193.10.202.74/personal/");                var response = client.DeleteAsync("personal/" + DelPer.Id).Result;                if (response.IsSuccessStatusCode)                {
-                    Console.Write("Success");                }                else                    Console.Write("Error");            }
+            using (var client = new HttpClient())
+            {
+
+                client.BaseAddress = new Uri("http://193.10.202.74/personal/");
+                var response = client.DeleteAsync("personal/" + DelPer.Id).Result;
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.Write("Success");
+                }
+                else
+                    Console.Write("Error");
+            }
             return View();
 
         }
 
-        [HttpPut]
-        public ActionResult UppdateraPersonal()
+        
+        public ActionResult UppdateraPersonal(int id) // KLAR ÄNDRA INGENTING
         {
+            PersonalModel person = new PersonalModel();
             using (var client = new HttpClient())
             {
-                PersonalModel person = new PersonalModel();
-                client.BaseAddress = new Uri("http://193.10.202.74/personal/personal/");
-                var response = client.PutAsJsonAsync("personal/", person).Result;
+
+                client.BaseAddress = new Uri("http://193.10.202.74/personal/");
+                var response = client.GetAsync("personal/" + id).Result;
                 if (response.IsSuccessStatusCode)
                 {
+                    var UpdateResponse = response.Content.ReadAsStringAsync().Result;
+                    person = JsonConvert.DeserializeObject<PersonalModel>(UpdateResponse);
                     Console.Write("Success");
+                }
+                else
+                    Console.Write("Error");
+            }
+            return View(person);
+        }
+
+        [HttpPost]
+        public ActionResult UppdateraPersonal(PersonalModel updPer)
+        {
+            PersonalModel ResponseAnv = new PersonalModel();
+            using (var client = new HttpClient())
+            {
+                
+                client.BaseAddress = new Uri("http://localhost:56539/"); //http://193.10.202.74/personal/
+                var response = client.PutAsJsonAsync<PersonalModel>("personal/", updPer).Result; //PutAsync
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                    //Console.Write("Success");
                 }
                 else
                     Console.Write("Error");
