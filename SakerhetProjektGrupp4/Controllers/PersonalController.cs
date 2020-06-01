@@ -13,13 +13,10 @@ using System.Threading.Tasks;
 
 namespace SakerhetProjektGrupp4.Controllers
 {
+    [Authorize]
     public class PersonalController : Controller
     {
-       
-        public void test()
-        {
-
-        }
+      
 
         private PersonalModel db = new PersonalModel();
 

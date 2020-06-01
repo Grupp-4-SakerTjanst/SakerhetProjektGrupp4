@@ -168,6 +168,7 @@
     <Content Include="Views\Personal\SkapaPersonal.cshtml" />
     <Content Include="Views\Personal\TaBortPersonal.cshtml" />
     <Content Include="Views\Personal\UppdateraPersonal.cshtml" />
+    <Content Include="Views\Personal\login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
