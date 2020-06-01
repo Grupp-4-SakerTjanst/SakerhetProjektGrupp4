@@ -33,7 +33,7 @@ namespace System.Web.Mvc
             using (var client = new HttpClient())
             {
 
-                client.BaseAddress = new Uri("http://localhost:54501/");
+                client.BaseAddress = new Uri("http://193.10.202.74/inlogg/personals");
                 var response = client.PostAsJsonAsync("Login", ResponseAnv).Result;
                 if (response.IsSuccessStatusCode)
                 {

@@ -15,48 +15,51 @@
         <tr>
 
             <th>
-             Namn
+                Namn
             </th>
             <th>
                 Efternamn
             </th>
             <th>
-               Användarnamn
+                Användarnamn
             </th>
             <th>
-               Behörigehtsnivå
+                Behörighetsnivå
             </th>
             <th>Roll</th>
         </tr>
 
         @foreach (var item in Model)
         {
-        <tr>
+            <tr>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Namn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Efternamn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AnvandarNamn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BehorighetsNiva)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Roll)
-            </td>
-            <td>
-                @Html.ActionLink("Lägg till", "SkapaPersonal", new { id = item.Id }) |
-                @Html.ActionLink("Ta bort", "TaBortPersonal", new { id = item.Id }) |
-                @Html.ActionLink("Ändra", "UppdateraPersonal", new { id = item.Id })
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Namn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Efternamn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AnvandarNamn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BehorighetsNiva)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Roll)
+                </td>
+                <td>
+                    @Html.ActionLink("Ta bort", "TaBortPersonal", new { id = item.Id }) |
+                    @Html.ActionLink("Ändra", "UppdateraPersonal", new { id = item.Id })
+                </td>
             </tr>
-            }
+            //@Html.ActionLink("Lägg till", "SkapaPersonal", new { id = item.Id })
+        }
 
-                </table>
+    </table>
+    <button>@Html.ActionLink("Lägg till ny anställd", "SkapaPersonal", "Personal")</button>
+
+
 
 
 </body>

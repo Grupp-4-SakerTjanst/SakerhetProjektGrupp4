@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Inloggning</h2>
+<h2>Admin Inloggning</h2>
 <head>
     <link href="~/Style/HomeStyle.css" rel="stylesheet" />
 </head>
@@ -11,12 +11,15 @@
 
     @using (Html.BeginForm("Index", "Home"))
     {
-<div>
-
-    <p>@Html.TextBox("anvNamn", null, new {placeholder = "Användarnamn", @class = "InlogForm" })</p>
-    <p>@Html.Password("losord", null, new { placeholder = "Lösenord", @class = "InlogForm" })</p>
-    <div><input type="submit" value="Logga in" class="loggknapp" /></div>
-</div>
-}
+    <div class="login-page">
+        <div class="form">
+            <form class="login-form">
+                <p>@Html.TextBox("anvNamn", null, new { placeholder = "Användarnamn", @class = "InlogForm" })</p>
+                <p>@Html.Password("losord", null, new { placeholder = "Lösenord", @class = "InlogForm" })</p>
+                <input type="submit" value="Logga in" class="loggknapp" />
+       </form>
+                </div>
+    </div>
+        }
 
 </body>
