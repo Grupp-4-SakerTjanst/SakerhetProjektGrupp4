@@ -1,6 +1,7 @@
 ﻿@model  SakerhetProjektGrupp4.Models.PersonalModel
 @{
-    Layout = null;
+   
+    ViewBag.Title = "SkapaPersonal";
 }
 
 <!DOCTYPE html>
@@ -8,26 +9,63 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="~/Style/FormStyle.css" rel="stylesheet" />
     <title>SkapaPersonal</title>
 </head>
 <body>
-    <div>
-        <div>
-            @using (Html.BeginForm("SkapaPersonal", "Personal", FormMethod.Post))
-            {
-                <p>@Html.TextBoxFor(x => x.AnvandarNamn) AnvNamn</p>
-                <p>@Html.TextBoxFor(x => x.Losenord) Losenord</p>
-                <p>@Html.TextBoxFor(x => x.Namn) Namn</p>
-                <p>@Html.TextBoxFor(x => x.Efternamn) Efternamn</p>
-                <p>@Html.TextBoxFor(x => x.BehorighetsNiva) BehorighetsNiva</p> // TODO, Dropdown meny.
-                <p>@Html.TextBoxFor(x => x.Roll) Roll</p> //Todo, Dropdown meny.
-                <input type="submit" value="Skicka" />
+    <div class="form-horizontal">
 
-            }
-        </div>
+        @using (Html.BeginForm("SkapaPersonal", "Personal", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <p class="control-label col-md-6">Användarnamn</p>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.AnvandarNamn, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                <p class="control-label col-md-6">Lösenord</p>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Losenord, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                <p class="control-label col-md-6">Förnamn</p>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Namn, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                <p class="control-label col-md-6">Efternamn</p>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Efternamn, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                <p class="control-label col-md-6">Behörighetsnivå</p>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.BehorighetsNiva, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                <p class="control-label col-md-6">Arbetsroll</p>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Roll, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Skicka" class="btn btn-default" />
+                </div>
+            </div>
+
+        }
+
     </div>
     <div>
-        @Html.ActionLink("Tillbaka", "Index")
-    </div>
+        <button>@Html.ActionLink("Tillbaka", "Index", "Personal")</button>
+</div>
 </body>
 </html>
