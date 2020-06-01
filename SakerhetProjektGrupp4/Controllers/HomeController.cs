@@ -9,99 +9,81 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
+
 namespace SakerhetProjektGrupp4.Controllers
 {
-
+    [Authorize]
     public class HomeController : Controller
     {
-        
+        // GET: Home
+        [AllowAnonymous]
         public ActionResult Index()
         {
-
-            
             return View();
         }
 
-
-        [AuthorizeUserAcessLevel(UserRole = 2)]
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult Index(string anvNamn, string losord)
         {
-            return RedirectToAction("Index", "Personal");
-            //PersonalModel PersInfo = new PersonalModel();
+          
+            PersonalModel PersMod = new PersonalModel {AnvandarNamn = anvNamn, Losenord = losord };
+            if (anvNamn == null || losord == null)
+            {
+                ModelState.AddModelError("", "Du måste fylla i både användarnamn och lösenord");
+                return View();
+            }
 
-            //PersInfo.AnvandarNamn = anvNamn;
-            //PersInfo.Losenord = losord;
-
-            //using (var client = new HttpClient())
-            //{
-
-            //    client.BaseAddress = new Uri("http://localhost:54501/");
-            //    var response = client.PostAsJsonAsync("Login", PersInfo).Result;
-            //    if (response.IsSuccessStatusCode)
-            //    {
-
-            //        var PersonalResponse = response.Content.ReadAsStringAsync().Result;
-            //        PersInfo = JsonConvert.DeserializeObject<PersonalModel>(PersonalResponse);
-            //        try
-            //        {
-            //            if (PersInfo.Id != null)
-            //            {
-            //                return RedirectToAction("Index", "Personal");
-            //            }
       
-            //        }
-            //        catch (Exception)
-            //        {
+            bool validUser = false;
 
-                        
-            //        }
-            //    }
-            //    else
-            //        Console.Write("Error");
-            //  }
+            //Kontrollera mot webbservice
+            validUser = AnvCheck(PersMod);
 
-            //return View();
+            if (validUser == true)
+            {
+                System.Web.Security.FormsAuthentication.RedirectFromLoginPage(PersMod.AnvandarNamn, false);
+                return RedirectToAction("Index", "Personal");
+            }
+            ModelState.AddModelError("", "Inloggningen ej godkänd");
+            return View();
+
         }
-
-
-        private string AuktoritetValidation(PersonalModel anv)
+        private bool AnvCheck(PersonalModel Person)
         {
+            using (var client = new HttpClient())
+            {
 
+                client.BaseAddress = new Uri("http://193.10.202.74/inlogg/personals");
 
-            return "hej";
-
+                var response = client.PostAsJsonAsync("Login", Person).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string PersonRes = response.Content.ReadAsStringAsync().Result;
+                    PersonalModel PersBehorig = JsonConvert.DeserializeObject<PersonalModel>(PersonRes);
+                    if (PersBehorig != null)
+                    {
+                        if (PersBehorig.BehorighetsNiva == 3)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }    
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                     
+                }
+                else
+                {
+                    return false;
+                }
+                 
+            }
         }
-
-
-
-        //[HttpPost]
-        //public ActionResult Index(string anvNamn, string losord)
-        //{
-        //    AnvandarModel test = new AnvandarModel();
-        //    List<PersonalModel> ResponseAnv = new List<PersonalModel>();
-                
-        //    test.Email = anvNamn;
-        //    test.Losenord = losord;
-
-        //    using (var client = new HttpClient())
-        //    {
-
-        //        client.BaseAddress = new Uri("http://localhost:54501/");
-        //        var response = client.PostAsJsonAsync("LoggaIn", test).Result;
-
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var AnvSvar = response.Content.ReadAsStringAsync().Result;
-        //            // ResponseAnv = JsonConvert.DeserializeObject<List<PersonalModel>>(AnvSvar);  //THE FCKING SACRATE CODE. TOUCH, DIE.
-        //            Console.Write("Success");
-        //        }
-        //        else
-        //            Console.Write("Error");
-        //    }
-
-        //    return View();
-        //}
     }
 }

@@ -13,13 +13,10 @@ using System.Threading.Tasks;
 
 namespace SakerhetProjektGrupp4.Controllers
 {
+    [Authorize]
     public class PersonalController : Controller
     {
-       
-        public void test()
-        {
-
-        }
+      
 
         private PersonalModel db = new PersonalModel();
 
@@ -84,7 +81,7 @@ namespace SakerhetProjektGrupp4.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://193.10.202.74/personal/");
+                client.BaseAddress = new Uri("http://193.10.202.74/inlogg/personals");
                 var response = client.PostAsJsonAsync("SkapaPersonal", Personal).Result;
 
                 if (response.IsSuccessStatusCode)
@@ -143,7 +140,7 @@ namespace SakerhetProjektGrupp4.Controllers
                 else
                     Console.Write("Error");
             }
-            return View();
+            return RedirectToAction("Index", "Personal");
 
         }
 
