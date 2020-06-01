@@ -27,6 +27,7 @@
                 Behörighetsnivå
             </th>
             <th>Roll</th>
+            <th>Alternativ</th>
         </tr>
 
         @foreach (var item in Model)
@@ -57,7 +58,7 @@
         }
 
     </table>
-    <button>@Html.ActionLink("Lägg till ny anställd", "SkapaPersonal", "Personal")</button>
+    <button>@Html.ActionLink("Lägg till ny anställd", "SkapaPersonal")</button>
 
 
 
