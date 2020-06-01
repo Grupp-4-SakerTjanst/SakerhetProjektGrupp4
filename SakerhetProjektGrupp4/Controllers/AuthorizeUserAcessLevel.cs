@@ -59,11 +59,11 @@ namespace System.Web.Mvc
              (httpContext.Request["losord"] as string);
 
              ResponseAnv = HamtaBehorig(AnvNamn, Losenord);
-            string CurrentUser = HttpContext.Current.User.Identity.Name.ToString();
+            
 
             if (UserRole <= ResponseAnv.BehorighetsNiva)
             {
-                
+                System.Web.Security.FormsAuthentication.RedirectFromLoginPage(AnvNamn, false);
                 return true;
             }
             else
