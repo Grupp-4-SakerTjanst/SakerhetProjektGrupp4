@@ -95,7 +95,7 @@ namespace SakerhetProjektGrupp4.Controllers
                 else
                     Console.Write("Error");
             }
-            return View();
+            return Redirect("Index");
         }
 
         // GET: Student
