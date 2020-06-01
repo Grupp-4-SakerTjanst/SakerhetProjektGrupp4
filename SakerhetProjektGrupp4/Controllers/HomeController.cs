@@ -18,46 +18,50 @@ namespace SakerhetProjektGrupp4.Controllers
         public ActionResult Index()
         {
 
+            
             return View();
         }
 
+
+        [AuthorizeUserAcessLevel(UserRole = 2)]
         [HttpPost]
         public ActionResult Index(string anvNamn, string losord)
         {
-            PersonalModel PersInfo = new PersonalModel();
+            return RedirectToAction("Index", "Personal");
+            //PersonalModel PersInfo = new PersonalModel();
 
-            PersInfo.AnvandarNamn = anvNamn;
-            PersInfo.Losenord = losord;
+            //PersInfo.AnvandarNamn = anvNamn;
+            //PersInfo.Losenord = losord;
 
-            using (var client = new HttpClient())
-            {
+            //using (var client = new HttpClient())
+            //{
 
-                client.BaseAddress = new Uri("http://localhost:54501/");
-                var response = client.PostAsJsonAsync("Login", PersInfo).Result;
+            //    client.BaseAddress = new Uri("http://localhost:54501/");
+            //    var response = client.PostAsJsonAsync("Login", PersInfo).Result;
+            //    if (response.IsSuccessStatusCode)
+            //    {
 
+            //        var PersonalResponse = response.Content.ReadAsStringAsync().Result;
+            //        PersInfo = JsonConvert.DeserializeObject<PersonalModel>(PersonalResponse);
+            //        try
+            //        {
+            //            if (PersInfo.Id != null)
+            //            {
+            //                return RedirectToAction("Index", "Personal");
+            //            }
+      
+            //        }
+            //        catch (Exception)
+            //        {
 
-                if (response.IsSuccessStatusCode)
-                {
+                        
+            //        }
+            //    }
+            //    else
+            //        Console.Write("Error");
+            //  }
 
-                    var PersonalResponse = response.Content.ReadAsStringAsync().Result;
-                    PersInfo.BehorighetsNiva = JsonConvert.DeserializeObject<PersonalModel>(PersonalResponse).BehorighetsNiva;
-
-                    if (PersInfo.BehorighetsNiva == 3)
-                    {
-
-                        string behorig = PersInfo.BehorighetsNiva.ToString();
-                       return RedirectToAction("Check","Personal", behorig);
-                    }
-
-                    //   AuktoritetValidation(response);
-                    // ResponseAnv = JsonConvert.DeserializeObject<List<PersonalModel>>(AnvSvar);  //THE FCKING SACRATE CODE. TOUCH, DIE.
-                    Console.Write("Success");
-                }
-                else
-                    Console.Write("Error");
-            }
-
-            return View();
+            //return View();
         }
 
 
