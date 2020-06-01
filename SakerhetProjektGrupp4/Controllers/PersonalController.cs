@@ -191,7 +191,7 @@ namespace SakerhetProjektGrupp4.Controllers
             using (var client = new HttpClient())
             {
                 
-                client.BaseAddress = new Uri("http://localhost:56539/"); //http://193.10.202.74/personal/
+                client.BaseAddress = new Uri("http://193.10.202.74/personal/"); //
                 var response = client.PutAsJsonAsync<PersonalModel>("personal/", updPer).Result; //PutAsync
 
                 if (response.IsSuccessStatusCode)
