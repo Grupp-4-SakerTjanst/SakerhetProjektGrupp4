@@ -8,39 +8,23 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net.Http.Formatting;
-using Newtonsoft.Json;
+
 
 
 namespace SakerhetProjektGrupp4.Controllers
 {
     public class PersonalController : Controller
     {
-        public ActionResult Check(string behorig)
+       
+        public void test()
         {
-            int hej = int.Parse(behorig);
 
-            if (hej == 3)
-            {
-                return RedirectToAction("Index", "Personal");
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            return View();
         }
+
         private PersonalModel db = new PersonalModel();
 
         string Baseurl = "http://193.10.202.74/personal/personal"; //Detta visar första sidan för admin att utföra CRUD
+        
         public async Task<ActionResult> Index()
         {
 
