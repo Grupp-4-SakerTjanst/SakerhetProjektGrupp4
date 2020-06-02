@@ -1,0 +1,39 @@
+﻿@model  IEnumerable<SakerhetProjektGrupp4.Models.DriftModel>
+@{
+    ViewBag.Title = "Drift";
+}
+
+
+<link href="~/Style/FormStyle.css" rel="stylesheet" />
+<link href="~/Style/HomeStyle.css" rel="stylesheet" />
+<div class="form" style="width:500px; top:40px; left:-90px; padding:0px;">
+    <h1 class="h1Size">Drift status</h1>
+    <table class="DriftTabel">
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tjanst)
+                </td>
+
+                <td>
+
+
+                    @if (item.status == 0)
+                    {
+                        <span><img src="~/Bilder/DriftStangd.png" style="width:15px;" alt="Alternate Text" /></span>
+                    }
+                    @if (item.status == 1)
+                    {
+                        <span><img src="~/Bilder/DriftOpen.png" style="width:15px;" alt="Alternate Text" /></span>
+                    }
+                </td>
+                <br />
+            </tr>
+
+        }
+    </table>
+    <button class="TillbakaBtn">@Html.ActionLink("Tillbaka", "Index", "Personal", new {@class="TillbakaBtn"})</button>
+
+</div>

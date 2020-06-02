@@ -37,7 +37,7 @@ namespace System.Web.Mvc
                 var response = client.PostAsJsonAsync("Login", ResponseAnv).Result;
                 if (response.IsSuccessStatusCode)
                 {
-
+                    
                     var PersonalResponse = response.Content.ReadAsStringAsync().Result;
                     ResponseAnv.BehorighetsNiva = JsonConvert.DeserializeObject<PersonalModel>(PersonalResponse).BehorighetsNiva;
 

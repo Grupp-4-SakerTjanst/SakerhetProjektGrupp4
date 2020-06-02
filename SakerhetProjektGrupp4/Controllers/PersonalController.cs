@@ -180,6 +180,38 @@ namespace SakerhetProjektGrupp4.Controllers
                     Console.Write("Error");
             }
             return View();
+
+        }
+
+
+        public async Task<ActionResult> Drift()
+        {
+
+            List<DriftModel> test = new List<DriftModel>();
+            using (var client = new HttpClient())
+            {
+
+                client.BaseAddress = new Uri("http://localhost:54501/");
+
+                client.DefaultRequestHeaders.Clear();
+
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                HttpResponseMessage Res = await client.GetAsync("DriftStatus");
+
+                if (Res.IsSuccessStatusCode)
+                {
+
+                    var PersonalResponse = Res.Content.ReadAsStringAsync().Result;
+
+                    test = JsonConvert.DeserializeObject<List<DriftModel>>(PersonalResponse);
+
+                }
+            }
+
+
+            return View(test);
         }
 
     }
