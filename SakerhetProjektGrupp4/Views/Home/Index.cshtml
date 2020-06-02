@@ -19,6 +19,7 @@
                 <p>@Html.Password("losord", null, new { placeholder = "Lösenord", @class = "InlogForm" })</p>
                 <input type="submit" value="Logga in" class="loggknapp" />
        </form>
+            @Html.ValidationSummary()
                 </div>
     </div>
         }
