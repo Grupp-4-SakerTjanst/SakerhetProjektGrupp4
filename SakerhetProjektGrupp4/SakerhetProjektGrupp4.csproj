@@ -182,8 +182,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Bilder\" />
-    <Folder Include="Views\Auktoritet\" />
-    <Folder Include="Views\Loggin\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
