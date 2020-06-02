@@ -1,6 +1,7 @@
 ﻿@model  SakerhetProjektGrupp4.Models.PersonalModel
+
 @{
-   
+
     ViewBag.Title = "SkapaPersonal";
 }
 
@@ -55,17 +56,22 @@
                 </div>
             </div>
 
+            @Html.DropDownListFor(x => x.Roll, new SelectList(Enum.GetValues(typeof(Arbetsroll))), "Välj arbetsroll", new { htmlAttributes = new { @class = "form-control" } })
+
+
+
+
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-12">
-                    <input type="submit" value="Skapa" class="btn btn-default" />
-                </div>
+            <div class="col-md-offset-2 col-md-12">
+                <input type = "submit" value="Skapa" class="btn btn-default" />
+            </div>
             </div>
 
-        }
+    }
 
     </div>
     <div>
         <button>@Html.ActionLink("Tillbaka", "Index", "Personal")</button>
-</div>
+    </div>
 </body>
 </html>

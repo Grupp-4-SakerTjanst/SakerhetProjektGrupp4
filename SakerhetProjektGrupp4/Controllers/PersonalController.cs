@@ -9,15 +9,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-
-
 namespace SakerhetProjektGrupp4.Controllers
 {
     [Authorize]
     public class PersonalController : Controller
     {
-      
-
         private PersonalModel db = new PersonalModel();
 
         string Baseurl = "http://193.10.202.74/personal/personal"; //Detta visar första sidan för admin att utföra CRUD

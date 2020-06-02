@@ -19,8 +19,17 @@ namespace SakerhetProjektGrupp4.Models
 
         public int BehorighetsNiva { get; set; }
 
-        public string Roll { get; set; }
+        public Arbetsroll Roll { get; set; }
 
         public int RefID { get; set; }
+    }
+
+    public enum Arbetsroll
+    {
+        Admin,
+        Kassör,
+        Biljettkontrollant,
+        Städare,
+        Skiftledare
     }
 }
